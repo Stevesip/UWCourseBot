@@ -1,11 +1,11 @@
 import os
-from flask import Flask, render_template
+import requests
+from flask import Flask, render_template, requests
 app = Flask(__name__)
 
 @app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
 	if request.method == "GET":
-		logging.warning('1') 
 		if request.args.get("hub.verify_token") == 'enghack':
 			return request.args.get('hub.challenge')
 		return "Wrong Verify Token"
