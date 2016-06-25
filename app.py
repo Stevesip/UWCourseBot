@@ -6,6 +6,8 @@ import json
 import traceback
 import random
 import urllib
+import course
+import os
 app = Flask(__name__)
 
 key = "a2cd9cdc7b9358e4156850f6e27ca339"
@@ -25,20 +27,19 @@ def webhook():
             payload = {'recipient': {'id': sender}, 'message': {'text': "You have selected:" + courseinfo[0] + " " + courseinfo[1] +". Retrieving data!" }}
             sys.stdout.write(courseinfo[0])
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
-            getcoursesinfo = 'https://api.uwaterloo.ca/v2/courses/'+ courseinfo[0] + '/' + courseinfo[1] + '.json?key=' + key
-            courseresponse = urllib.urlopen(getcoursesinfo)
-            coursedata = json.load(courseresponse)
-            returntext = "The course title is:" + coursedata['data']['title']
-            #flag = 0
-            #for c in totalcourses:
-            #    if (text == c.title)
-            #        flag = 1
-            #if flag = 0
-            #    totalcourses = totalcourses.append(course(courseinfo[0], courseinfo[1]))
 
-            #for c in totalcourses:
-            #    if c.title == text:
-            #        returntext = c.update()
+            flag = 0
+            for c in totalcourses:
+                if (text == c.title)
+                    flag = 1
+            if flag = 0
+                totalcourses = totalcourses.append(course(courseinfo[0], courseinfo[1]))
+
+            for c in totalcourses:
+                if c.title == text:
+                    returntext = c.update()
+
+            returntext = "The course title is:" + coursedata['data']['title']
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext }} # We're going to send this back
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
