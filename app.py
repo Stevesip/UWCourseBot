@@ -1,5 +1,6 @@
 from flask import Flask, request
 import json
+#import requests
 import traceback
 import random
 import os
@@ -15,6 +16,10 @@ def root():
 
 @app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
+	if request.method == "POST":
+		data = json.loads(request.data)
+		print (data)
+
 	if request.method == "GET":
 		if request.args.get("hub.verify_token") == 'enghack':
 			return request.args.get('hub.challenge')
