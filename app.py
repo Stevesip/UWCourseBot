@@ -25,9 +25,9 @@ def webhook():
             payload = {'recipient': {'id': sender}, 'message': {'text': "You sent:" + text }}
              r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
     elif request.method == "GET":
-		if request.args.get("hub.verify_token") == 'enghack':
-			return request.args.get('hub.challenge')
-		return "Wrong Verify Token"
+        if request.args.get("hub.verify_token") == token:
+            return request.args.get('hub.challenge')
+        return "Wrong Verify Token"
 
 if __name__ == '__main__':
 	port = int(os.environ.get("PORT", 5000))
