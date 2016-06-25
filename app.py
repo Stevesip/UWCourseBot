@@ -24,6 +24,8 @@ def webhook():
             sender = data['entry'][0]['messaging'][0]['sender']['id']
             payload = {'recipient': {'id': sender}, 'message': {'text': "You sent:" + text }}
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
+        except Exception as e:
+            print traceback.format_exc()
     elif request.method == "GET":
         if request.args.get("hub.verify_token") == token:
             return request.args.get('hub.challenge')
