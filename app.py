@@ -21,7 +21,7 @@ def webhook():
     if request.method == "POST":
         try:
             data = json.loads(request.data)
-            sys.stdout.write(data)
+            json.dumps(data)
             text = data['entry'][0]['messaging'][0]['message']['text']
             sender = data['entry'][0]['messaging'][0]['sender']['id']
             payload = {'recipient': {'id': sender}, 'message': {'text': text }}
