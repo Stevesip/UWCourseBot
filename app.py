@@ -32,7 +32,7 @@ def webhook():
             for c in totalcourses:
                 if text == c.title:
                     flag = 1
-            if flag = 0:
+            if flag == 0:
                 totalcourses = totalcourses.append(course(courseinfo[0], courseinfo[1]))
 
             for c in totalcourses:
