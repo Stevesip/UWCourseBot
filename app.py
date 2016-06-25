@@ -13,19 +13,17 @@ def webhook():
     if request.method == 'POST':
         try:
             data = json.loads(request.data)
-            text = data["entry"][0]["messaging"][0]["message"]["text"] # Incoming Message Text
-            sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
-            payload = {'recipient': {'id': sender}, 'message': {'text': text }} # We're going to send this back
-            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
+            text = data["entry"][0]["messaging"][0]["message"]["text"]
+            sender = data['entry'][0]['messaging'][0]['sender']['id']
+            payload = {'recipient': {'id': sender}, 'message': {'text': text }}
+            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
         except Exception as e:
             print traceback.format_exc()
-             # something went wrong
         return "ok"
-    elif request.method == 'GET': # For the initial verification
+    elif request.method == 'GET':
         if request.args.get('hub.verify_token') == 'enghack':
             return request.args.get('hub.challenge')
         return "Wrong Verify Token"
-    return "Hello World" #Not Really Necessary
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
