@@ -21,15 +21,13 @@ def webhook():
     if request.method == "POST":
         try:
             data = json.loads(request.data)
-            sys.stdout.write('Got some json!')
             text = data['entry'][0]['messaging'][0]['message']['text']
-            sys.stdout.write('Text:' + text)
             sender = data['entry'][0]['messaging'][0]['sender']['id']
-            payload = {'recipient': {'id': sender}, 'message': {'text': 'Hello World' }}
-            sys.stdout.write('attempting to write to the user')
+            payload = {'recipient': {'id': sender}, 'message': {'text': text }}
+            sys.stdout.write('recieved:' text, +  'attempting to write to the user')
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
         except Exception as e:
-            print traceback.format_exc()
+            sys.stdout.write(traceback.format_exc())
     elif request.method == "GET":
         if request.args.get("hub.verify_token") == enghack:
             return request.args.get('hub.challenge')
