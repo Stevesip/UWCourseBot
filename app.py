@@ -9,7 +9,7 @@ import sys
 
 app = Flask(__name__)
 
-token = "enghack"
+token = "EAAWx45TcH2oBANaTOaFtRmWdBSSsY1XZBn9fZCVvIQ0IqZBN2Mn1k3HcCEvTZBlmI4q8zRUN9RyLbP9ylbMaIHRcQRDQIm0aqPRZB0ctZBlHsku3nzl5IiIFd1XmfsnLMzM390X91piLumhpPD3ObZAlgLjQLoFLS3ZA9HDOdgwZBTgZDZD"
 
 
 @app.route("/")
@@ -31,7 +31,7 @@ def webhook():
         except Exception as e:
             print traceback.format_exc()
     elif request.method == "GET":
-        if request.args.get("hub.verify_token") == token:
+        if request.args.get("hub.verify_token") == enghack:
             return request.args.get('hub.challenge')
         return "Wrong Verify Token"
 
