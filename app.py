@@ -1,6 +1,6 @@
 import os
 import request
-from flask import Flask, render_template, requests
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route("/webhook", methods=['GET', 'POST'])
