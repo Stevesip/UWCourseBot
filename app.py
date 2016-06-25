@@ -21,12 +21,15 @@ def webhook():
     if request.method == "POST":
         try:
             data = json.loads(request.data)
-            sys.stdout.write(json.dumps(data))
-            text = data['entry'][0]['messaging'][0]['message']['text']
+            #text = data['entry'][0]['messaging'][0]['message']['text']
             sender = data['entry'][0]['messaging'][0]['sender']['id']
-            payload = {'recipient': {'id': sender}, 'message': {'text': text }}
+            data = {
+                "recipient": {"id": user_id},
+                "message": {"text": "sending messages"}
+            }
+            sys.stdout.write(json.dumps(data))
             sys.stdout.write('attempting to write to the user')
-            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
+            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=data)
             return "ok"
         except Exception as e:
             sys.stdout.write(traceback.format_exc())
