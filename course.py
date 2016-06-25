@@ -12,7 +12,7 @@ class Course:
 	def __init__(self, num, name):
     	self.num = num
     	self.name = name
-    	self.title = name + num
+    	self.title = name + " " + num
 
     def addUser(self, user):
     	self.users.append(user)
