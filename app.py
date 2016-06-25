@@ -24,7 +24,7 @@ def webhook():
             #text = data['entry'][0]['messaging'][0]['message']['text']
             sender = data['entry'][0]['messaging'][0]['sender']['id']
             data = {
-                "recipient": {"id": user_id},
+                "recipient": {"id": sender},
                 "message": {"text": "sending messages"}
             }
             sys.stdout.write(json.dumps(data))
