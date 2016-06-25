@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 
 token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
+scourses = []
 courses = []
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -25,17 +26,20 @@ def webhook():
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             courseinfo = text.split()
 
-            if text not in courses:
-                courses = courses.append(Course(courseinfo[0], courseinfo[1]))
+            if text not in scourses:
+                scourses = scourses.append(text)
+                courses = courses.append(Courses(courseinfo[0], courseinfo[1]))
 
             for course in courses:
-                if course.full == text:
-                    returntext = update(course)
+                if course.title == text:
+                    returntext = course.update()
 
             returntext = "You have chosen" + text "," + "The course title is:" + coursedata['data']['title']
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext] }} # We're going to send this back
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
+
+
         except Exception as e:
             print traceback.format_exc()
         return "ok"
