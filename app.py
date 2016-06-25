@@ -27,7 +27,7 @@ def webhook():
             payload = {'recipient': {'id': sender}, 'message': {'text': text }}
             sys.stdout.write('attempting to write to the user')
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
-            return jsonify(result={"status": 200})
+            return "ok"
         except Exception as e:
             sys.stdout.write(traceback.format_exc())
     elif request.method == "GET":
