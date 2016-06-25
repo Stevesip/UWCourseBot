@@ -19,20 +19,17 @@ def root():
 @app.route("/webhook", methods=['GET', 'POST'])
 def webhook():
     if request.method == "POST":
-        try:
-            data = json.loads(request.data)
-            #text = data['entry'][0]['messaging'][0]['message']['text']
-            sender = data['entry'][0]['messaging'][0]['sender']['id']
-            data = {
-                "recipient": {"id": sender},
-                "message": {"text": "sending messages"}
-            }
-            sys.stdout.write(json.dumps(data))
-            sys.stdout.write('attempting to write to the user')
-            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=data)
-            return "ok"
-        except Exception as e:
-            sys.stdout.write(traceback.format_exc())
+        data = json.loads(request.data)
+        #text = data['entry'][0]['messaging'][0]['message']['text']
+        sender = data['entry'][0]['messaging'][0]['sender']['id']
+        data = {
+            "recipient": {"id": sender},
+            "message": {"text": "sending messages"}
+        }
+        sys.stdout.write(json.dumps(data))
+        sys.stdout.write('attempting to write to the user')
+        r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=data)
+        return "ok"
     elif request.method == "GET":
         if request.args.get("hub.verify_token") == enghack:
             return request.args.get('hub.challenge')
