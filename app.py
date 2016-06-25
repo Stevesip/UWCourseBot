@@ -3,6 +3,7 @@ import requests
 import json
 import traceback
 import random
+import sys
 app = Flask(__name__)
 
 token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
@@ -18,7 +19,8 @@ def webhook():
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
             print traceback.format_exc()
-            print data # something went wrong
+            sys.stdout.write(json.dumps(data))
+             # something went wrong
         return "ok"
     elif request.method == 'GET': # For the initial verification
         if request.args.get('hub.verify_token') == 'enghack':
