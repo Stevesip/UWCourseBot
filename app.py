@@ -17,7 +17,7 @@ def webhook():
             payload = {'recipient': {'id': sender}, 'message': {'text': text[::-1] }} # We're going to send this back
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
-            print text # something went wrong
+            print traceback.format_exc() # something went wrong
         return "ok"
     elif request.method == 'GET': # For the initial verification
         if request.args.get('hub.verify_token') == 'enghack':
