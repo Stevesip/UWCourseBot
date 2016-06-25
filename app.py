@@ -16,8 +16,7 @@ app = Flask(__name__)
 
 
 token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
-scourses = []
-courses = []
+totalcourses = []
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'POST':
@@ -26,13 +25,16 @@ def webhook():
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             courseinfo = text.split()
 
-            if text not in scourses:
-                scourses = scourses.append(text)
-                courses = courses.append(Courses(courseinfo[0], courseinfo[1]))
+            flag = 0
+            for c in totalcourses:
+                if (text == c.title)
+                    flag = 1
+            if flag = 0
+                totalcourses = totalcourses.append(course(courseinfo[0], courseinfo[1]))
 
-            for course in courses:
-                if course.title == text:
-                    returntext = course.update()
+            for c in totalcourses:
+                if c.title == text:
+                    returntext = c.update()
 
             returntext = "You have chosen" + text "," + "The course title is:" + coursedata['data']['title']
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
