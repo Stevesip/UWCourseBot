@@ -4,12 +4,19 @@ import json
 import traceback
 import random
 import sys
+
 import urllib
+
+
+# Course class
+import course
+
+
 app = Flask(__name__)
 
-key = "a2cd9cdc7b9358e4156850f6e27ca339"
-token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
 
+token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
+courses = []
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'POST':
@@ -17,9 +24,14 @@ def webhook():
             data = json.loads(request.data)
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             courseinfo = text.split()
-            getcoursesurl = 'https://api.uwaterloo.ca/v2/'courseinfo[0]+'/'+courseinfo[1]+'.json?key='+key
-            courseresponse = urllib.urlopen(getcoursesurl)
-            coursedata = json.load(response)
+
+            if text not in courses:
+                courses = courses.append(Course(courseinfo[0], courseinfo[1]))
+
+            for course in courses:
+                if course.full == text:
+                    returntext = update(course)
+
             returntext = "You have chosen" + text "," + "The course title is:" + coursedata['data']['title']
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext] }} # We're going to send this back
