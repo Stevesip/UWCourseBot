@@ -1,5 +1,4 @@
 from flask import Flask, request
-import requests
 import json
 import traceback
 import random
