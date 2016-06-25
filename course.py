@@ -17,12 +17,7 @@ class Course:
     def addUser(self, user):
     	self.users.append(user)
 
-    def update():
+    def update(self):
       getcoursesurl = 'https://api.uwaterloo.ca/v2/courses/'self.name+'/'+self.num+'.json?key='+key
       courseresponse = urllib.urlopen(getcoursesurl)
       coursedata = json.load(courseresponse)
-
-
-
-   	# For every user subscribed.
-   	def message_send():
