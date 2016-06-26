@@ -14,9 +14,13 @@ def webhook():
     if request.method == 'POST':
         try:
             data = json.loads(request.data)
+            sys.stdout.write("Got data!")
+            sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
+            sys.stdout.write('got text and sender\n')
             courseinfo = text.split()
             payload = {'recipient': {'id': sender}, 'message': {'text': "You have selected:" + courseinfo[0] + " " + courseinfo[1] +". Retrieving data!" }}
+            sys.stdout.write(courseinfo[0])
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
             getcoursesinfo = 'https://api.uwaterloo.ca/v2/courses/'courseinfo[0]+'/'+courseinfo[1]+'.json?key='+key
             courseresponse = urllib.urlopen(getcoursesinfo)
@@ -32,7 +36,6 @@ def webhook():
             #for c in totalcourses:
             #    if c.title == text:
             #        returntext = c.update()
-            sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext }} # We're going to send this back
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
