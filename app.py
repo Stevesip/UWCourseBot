@@ -36,6 +36,7 @@ def webhook():
 
             if not stotalcourses:
                 stotalcourses = stotalcourses.append(name)
+                totalcourses = totalcourses.append(Course(courseinfo[0], courseinfo[1]))
             else:
                 flag = 0
                 for c in stotalcourses:
