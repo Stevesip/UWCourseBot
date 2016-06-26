@@ -96,14 +96,11 @@ def webhook():
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             resp = client.converse(sender, text, {})
             if resp['type'] == 'merge':
-                payload = {'recipient': {'id': sender}, 'message': {'text': 'got a merge to work' }} # We're going to send this back
-                r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
                 if resp['entities']['Greetings']:
-                    payload = {'recipient': {'id': sender}, 'message': {'text': 'its a greeting' }} # We're going to send this back
-                    r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
                     resp = client.converse(sender, text, {})
                     if resp['type'] == 'msg':
                         payload = {'recipient': {'id': sender}, 'message': {'text': resp['msg'] }} # We're going to send this back
+                        r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
 
         except Exception as e:
             print traceback.format_exc() # something went wrong
