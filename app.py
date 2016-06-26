@@ -16,6 +16,7 @@ global totalcourses = []
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
+    global totalcourses
     if request.method == 'POST':
         try:
             data = json.loads(request.data)
