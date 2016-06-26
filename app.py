@@ -23,7 +23,7 @@ def webhook():
             payload = {'recipient': {'id': sender}, 'message': {'text': "You have selected:" + courseinfo[0] + " " + courseinfo[1] +". Retrieving data!" }}
             sys.stdout.write(courseinfo[0])
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
-            getcoursesinfo = 'https://api.uwaterloo.ca/v2/courses/'+courseinfo[0]+'/'+courseinfo[1]+'.json?key='+key
+            getcoursesinfo = 'https://api.uwaterloo.ca/v2/courses/'+ courseinfo[0] + '/' + courseinfo[1] + '.json?key=' + key
             courseresponse = urllib.urlopen(getcoursesinfo)
             coursedata = json.load(courseresponse)
             returntext = "The course title is:" + coursedata['data']['title']
