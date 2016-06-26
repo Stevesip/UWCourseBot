@@ -1,5 +1,5 @@
 from flask import Flask, request
-from wit import Wit
+from wit.wit import Wit
 import requests
 import os
 import sys
