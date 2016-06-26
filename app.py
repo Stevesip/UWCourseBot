@@ -95,7 +95,7 @@ def webhook():
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             resp = client.converse(sender, text, {})
-            clientdata = json.loads(resp.data)
+            clientdata = json.loads(resp)
             if clientdata['type'] == 'merge':
                 payload = {'recipient': {'id': sender}, 'message': {'text': 'got a merge to work' }} # We're going to send this back
                 r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
