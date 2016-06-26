@@ -1,4 +1,5 @@
 from flask import Flask, request
+from course import Course
 import requests
 import os
 import sys
@@ -6,7 +7,7 @@ import json
 import traceback
 import random
 import urllib
-from course import course
+
 
 app = Flask(__name__)
 
@@ -33,7 +34,7 @@ def webhook():
                 if text == c.title:
                     flag = 1
             if flag == 0:
-                totalcourses = totalcourses.append(course(courseinfo[0], courseinfo[1]))
+                totalcourses = totalcourses.append(Course(courseinfo[0], courseinfo[1]))
 
             for c in totalcourses:
                 if c.title == text:
