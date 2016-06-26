@@ -3,7 +3,7 @@ import urllib
 
 key = "a2cd9cdc7b9358e4156850f6e27ca339"
 class Course:
-
+	title = None
 	users = []
 	num = None
 	name = None
@@ -12,6 +12,7 @@ class Course:
 	def __init__(self, num, name):
     	self.num = num
     	self.name = name
+    	self.title = name + num
 
     def addUser(self, user):
     	self.users.append(user)
@@ -25,7 +26,3 @@ class Course:
 
    	# For every user subscribed.
    	def message_send():
-
-
-
-   	def
