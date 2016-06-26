@@ -11,6 +11,8 @@ from course import Course
 app = Flask(__name__)
 
 def fetchCourse(session_id, context):
+    payload = {'recipient': {'id': session_id}, 'message': {'text': "fetching the course!" }} # We're going to send this back
+    r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
     sys.stdout.write('got text and sender\n')
     courseinfo = context['code'].split()
     if not stotalcourses:
@@ -54,10 +56,12 @@ def say(session_id, context, msg):
     r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
 
 def merge(session_id, context, entities, msg):
+    sys.stdout.write('you are trying to merge entities')
+    payload = {'recipient': {'id': session_id}, 'message': {'text': "trying to merge man" }} # We're going to send this back
+    r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
     code = first_entity_value(entities, 'course_codes')
     if code:
         context['code'] = code
-    sys.stdout.write('you are trying to merge entities')
     return context
 
 def error(session_id, context, e):
@@ -91,8 +95,6 @@ def webhook():
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
             resp = client.converse(sender, text, {})
-            payload = {'recipient': {'id': sender}, 'message': {'text': str(resp) }} # We're going to send this back
-            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
             print traceback.format_exc() # something went wrong
         return "ok"
