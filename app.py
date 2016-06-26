@@ -38,11 +38,25 @@ def fetchCourse(session_id, context):
     context['courseinfo'] = "The course title is:" + returndata['data']['title']
     return context
 
+def first_entity_value(entities, entity):
+    if entity not in entities:
+        return None
+    val = entities[entity][0]['value']
+    if not val:
+        return None
+    return val['value'] if isinstance(val, dict) else val
+
+
 def say(session_id, context, msg):
-    payload = {'recipient': {'id': sender}, 'message': {'text': str(msg) }} # We're going to send this back
+    sys.stdout.write(session_id+ " compared to" +sender)
+    sys.stdout.write(msg)
+    payload = {'recipient': {'id': session_id}, 'message': {'text': msg }} # We're going to send this back
     r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
 
 def merge(session_id, context, entities, msg):
+    code = first_entity_value(entities, 'course_codes')
+    if code:
+        context['code'] = code
     return context
 
 def error(session_id, context, e):
