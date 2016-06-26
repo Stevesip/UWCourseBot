@@ -1,5 +1,3 @@
-import urllib
-
 class Course:
     title = None
     users = []
