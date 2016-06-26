@@ -57,6 +57,7 @@ def merge(session_id, context, entities, msg):
     code = first_entity_value(entities, 'course_codes')
     if code:
         context['code'] = code
+    sys.stdout.write('you are trying to merge entities')
     return context
 
 def error(session_id, context, e):
