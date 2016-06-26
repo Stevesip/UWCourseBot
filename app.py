@@ -33,15 +33,16 @@ def webhook():
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
 
             flag = 0
-            for c in totalcourses:
+            for c in stotalcourses:
                 if text == c.title:
                     flag = 1
             if flag == 0:
+                stotalcourses = stotalcourses.append(c)
                 totalcourses = totalcourses.append(Course(courseinfo[0], courseinfo[1]))
 
-            for c in totalcourses:
-                if c.title == text:
-                    returntext = c.update()
+            for i in range len(stotalcourses):
+                if totalcourses[i].title == text:
+                    returntext = totalcourses[i].update()
 
             returntext = "The course title is:" + coursedata['data']['title']
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext }} # We're going to send this back
