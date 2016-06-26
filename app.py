@@ -1,4 +1,5 @@
 from flask import Flask, request
+from wit import Wit
 import requests
 import os
 import sys
@@ -8,6 +9,54 @@ import json
 from course import Course
 
 app = Flask(__name__)
+
+def fetchCourse(session_id, context):
+    sys.stdout.write('got text and sender\n')
+    courseinfo = context['code'].split()
+    if not stotalcourses:
+        stotalcourses.append(text)
+        totalcourses.append(Course(courseinfo[0], courseinfo[1]))
+    else:
+        flag = 0
+    for c in stotalcourses:
+        if text == c:
+            flag = 1
+        if flag == 0:
+            stotalcourses.append(text)
+            totalcourses.append(Course(courseinfo[0], courseinfo[1]))
+    for i in xrange(len(stotalcourses)):
+        if totalcourses[i].title == text:
+            sys.stdout.write(str(len(stotalcourses)))
+            sys.stdout.write("FUCK")
+            sys.stdout.write(totalcourses[i].name)
+            sys.stdout.write(totalcourses[i].num)
+            returndata = totalcourses[i].update()
+
+    sys.stdout.write(stotalcourses[0])
+    sys.stdout.write(totalcourses[0].title)
+
+    context['courseinfo'] = "The course title is:" + returndata['data']['title']
+    return context
+
+def say(session_id, context, msg):
+    print(msg)
+
+def merge(session_id, context, entities, msg):
+    return context
+
+def error(session_id, context, e):
+    print(str(e))
+
+actions = {
+    'say': say,
+    'merge': merge,
+    'error': error,
+    'fetchCourse': fetchCourse,
+}
+
+aitoken = 'OVCKIDGTEFCPY3P4DL3XBA25H7QUWWWJ'
+
+client = Wit(aitoken, actions)
 
 key = "a2cd9cdc7b9358e4156850f6e27ca339"
 token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
@@ -25,37 +74,9 @@ def webhook():
             sys.stdout.write("Got data!")
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             text = data['entry'][0]['messaging'][0]['message']['text'] # Incoming Message Text
-            sys.stdout.write('got text and sender\n')
-            courseinfo = text.split()
-            payload = {'recipient': {'id': sender}, 'message': {'text': "You have selected:" + courseinfo[0] + " " + courseinfo[1] +". Retrieving data!" }}
-            #sys.stdout.write(courseinfo[0])
-            r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
-
-            if not stotalcourses:
-                stotalcourses.append(text)
-                totalcourses.append(Course(courseinfo[0], courseinfo[1]))
-            else:
-                flag = 0
-                for c in stotalcourses:
-                    if text == c:
-                        flag = 1
-                if flag == 0:
-                    stotalcourses.append(text)
-                    totalcourses.append(Course(courseinfo[0], courseinfo[1]))
-
-            for i in xrange(len(stotalcourses)):
-                if totalcourses[i].title == text:
-                    sys.stdout.write(str(len(stotalcourses)))
-                    sys.stdout.write("FUCK")
-                    sys.stdout.write(totalcourses[i].name)
-                    sys.stdout.write(totalcourses[i].num)
-                    returndata = totalcourses[i].update()
-
-            sys.stdout.write(stotalcourses[0])
-            sys.stdout.write(totalcourses[0].title)
-
-            returntext = "The course title is:" + returndata['data']['title']
-            payload = {'recipient': {'id': sender}, 'message': {'text': returntext }} # We're going to send this back
+            resp = client.converse(sender, text, {})
+            sys.stdout.write(str(resp))
+            payload = {'recipient': {'id': sender}, 'message': {'text': str(resp) }} # We're going to send this back
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
         except Exception as e:
             print traceback.format_exc() # something went wrong
