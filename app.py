@@ -44,7 +44,7 @@ def webhook():
                     stotalcourses = stotalcourses.append(text)
                     totalcourses = totalcourses.append(Course(courseinfo[0], courseinfo[1]))
 
-            for i in range(0, len(stotalcourses)):
+            for i in xrange(len(stotalcourses)):
                 if totalcourses[i].title == text:
                     returntext = totalcourses[i].update()
 
