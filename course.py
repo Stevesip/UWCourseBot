@@ -14,6 +14,6 @@ class Course:
 
 
     def update(self):
-        getcoursesurl = 'https://api.uwaterloo.ca/v2/courses/'self.name+'/'+self.num+'.json?key='+key
+        getcoursesurl = 'https://api.uwaterloo.ca/v2/courses/'+self.name+'/'+self.num+'.json?key='+key
         courseresponse = urllib.urlopen(getcoursesurl)
         coursedata = json.load(courseresponse)
