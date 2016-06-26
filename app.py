@@ -2,7 +2,6 @@ from flask import Flask, request
 import requests
 import os
 import sys
-import json
 import traceback
 import random
 from course import Course
