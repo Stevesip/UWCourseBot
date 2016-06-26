@@ -1,3 +1,4 @@
+key = "a2cd9cdc7b9358e4156850f6e27ca339"
 class Course:
     title = None
     users = []
