@@ -4,7 +4,7 @@ class Course:
     num = None
     name = None
 
-    def __init__(self, num, name):
+    def __init__(self, name, num):
         self.num = num
         self.name = name
         self.title = name + " " + num

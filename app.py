@@ -29,7 +29,7 @@ def webhook():
             sys.stdout.write('got text and sender\n')
             courseinfo = text.split()
             payload = {'recipient': {'id': sender}, 'message': {'text': "You have selected:" + courseinfo[0] + " " + courseinfo[1] +". Retrieving data!" }}
-            sys.stdout.write(courseinfo[0])
+            #sys.stdout.write(courseinfo[0])
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
 
             if not stotalcourses:
@@ -46,6 +46,8 @@ def webhook():
 
             for i in xrange(len(stotalcourses)):
                 if totalcourses[i].title == text:
+                    sys.stdout.write(len(stotalcourses))
+                    sys.stdout.write("FUCK")
                     returndata = totalcourses[i].update()
 
             sys.stdout.write(stotalcourses[0])
