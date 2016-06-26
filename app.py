@@ -32,15 +32,17 @@ def webhook():
             sys.stdout.write(courseinfo[0])
             r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload)
 
+            name = json.dumps(text)
+
             if not stotalcourses:
-                stotalcourses = stotalcourses.append(text)
-            else
+                stotalcourses = stotalcourses.append(name)
+            else:
                 flag = 0
                 for c in stotalcourses:
-                    if text == c.title:
+                    if name == c:
                         flag = 1
                 if flag == 0:
-                    stotalcourses = stotalcourses.append(text)
+                    stotalcourses = stotalcourses.append(name)
                     totalcourses = totalcourses.append(Course(courseinfo[0], courseinfo[1]))
 
             for i in range(0, len(stotalcourses)):
