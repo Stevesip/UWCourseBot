@@ -19,7 +19,7 @@ def webhook():
             courseinfo = text.split()
             getcoursesurl = 'https://api.uwaterloo.ca/v2/'courseinfo[0]+'/'+courseinfo[1]+'.json?key='+key
             courseresponse = urllib.urlopen(getcoursesurl)
-            coursedata = json.load(response)
+            coursedata = json.load(courseresponse)
             returntext = "You have chosen" + text "," + "The course title is:" + coursedata['data']['title']
             sender = data['entry'][0]['messaging'][0]['sender']['id'] # Sender ID
             payload = {'recipient': {'id': sender}, 'message': {'text': returntext] }} # We're going to send this back
