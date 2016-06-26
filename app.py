@@ -34,7 +34,7 @@ def webhook():
 
             if not stotalcourses:
                 stotalcourses = stotalcourses.append(text)
-            else
+            else:
                 flag = 0
                 for c in stotalcourses:
                     if text == c:
