@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 key = "a2cd9cdc7b9358e4156850f6e27ca339"
 token = "EAAWx45TcH2oBAG7oZAtIoljLsiyQ8rrOlZC1LdXoaAEKau5YBfhrR5LLJnWegJ5VZAlRj98hm4xa2SIBg67aKYpqZBFwvWJAzD8pJ01zxR4qF8HaRXBDWsvZAIrZAZABsADJqfG537eEREziF87b5d1vnkNZCBF7sUBaLHsTCxul5wZDZD"
-totalcourses = []
+global totalcourses = []
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
