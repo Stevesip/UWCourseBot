@@ -6,7 +6,7 @@ import json
 import traceback
 import random
 import urllib
-from course import *
+from course import course
 
 app = Flask(__name__)
 
