@@ -46,7 +46,6 @@ def webhook():
 
             for i in xrange(len(stotalcourses)):
                 if totalcourses[i].title == text:
-                    sys.stdout.write(""+len(stotalcourses))
                     sys.stdout.write("FUCK")
                     returndata = totalcourses[i].update()
 
