@@ -103,9 +103,7 @@ def webhook():
                     r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
                     resp = client.converse(sender, text, {})
                     if resp['type'] == 'msg':
-                        payload = {'recipient': {'id': sender}, 'message': {'text': "recieved a message!" }} # We're going to send this back
-                        r = requests.post('https://graph.facebook.com/v2.6/me/messages/?access_token=' + token, json=payload) # Lets send it
-                        say(sender, {},resp['msg'])
+                        payload = {'recipient': {'id': sender}, 'message': {'text': resp['msg'] }} # We're going to send this back
 
         except Exception as e:
             print traceback.format_exc() # something went wrong
