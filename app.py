@@ -1,6 +1,4 @@
-import pymongo
 from flask import Flask, request
-from pymongo import MongoClient
 import requests
 import os
 import sys
@@ -32,8 +30,5 @@ def webhook():
 
 
 if __name__ == '__main__':
-    client = MongoClient('mongodb://coursebotadmin:admin123@ds031607.mlab.com:31607/coursebotinfo')
-    db = client.coursebotinfo
-    collection = db.UWCourseBot
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
