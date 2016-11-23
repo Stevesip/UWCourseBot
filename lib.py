@@ -7,6 +7,9 @@ import random
 url = 'https://api.uwaterloo.ca/v2/courses/'
 key = '2d91198533b55707eaf3e29850108000'
 
+witUrl = ''
+witKey = ''
+
 # api call to https://api.uwaterloo.ca/v2/courses
 def getAllCourses():
 	r = requests.get(url + '.json?key=' + key)
@@ -62,3 +65,31 @@ def getCourseExamSchedule(subject, catelog_num):
 		return r.json()['data']
 	else:
 		return
+
+'''
+# wit understanding
+def parseMessage(message) {
+	strbuf = ''
+
+	for char in message:
+		if (char == " "):
+			strbuf = strbuf + '%20'
+		else:
+			strbuf = strbuf + char
+
+	urlSend = url + strbuf
+
+	r = requests.get(urlSend)
+	#set header with authorization token
+
+	rWit = json.loads(r.text)
+
+	if ()
+'''
+
+
+
+
+
+
+
