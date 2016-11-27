@@ -11,6 +11,21 @@ import json
 
 app = Flask(__name__)
 
+def enterOneEntry(senderId, message):
+    if collection.find_one({"senderId": senderId}) != None:
+        #Entry already found, just update
+        result=collection.update_one({"senderId": senderId},{"message": message})
+        if result.acknowledged == False:
+            # Didnt work, post error
+        else:
+            # Worked
+    else:
+         result=collection.insert_one({"senderId": senderId,"message": message})
+         if result.acknowledged == False:
+             # Didnt work, post error
+         else:
+             # Worked
+
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'GET':
@@ -25,6 +40,7 @@ def webhook():
             # based on what is returned. we send this method to wit.ai
             # the 'entity', from the json that is returned will guide us
             message = data['entry'][0]['messaging']['message']['text']
+
 
             # send to wit and get the return.
             # might want to make a helper send function.
